@@ -16,8 +16,9 @@ def index():
 def add_user():
     username = request.form.get('username')
     number = request.form.get('number')
+    password = request.form.get('password')
     # /idm_inputにリダイレクト
-    return render_template('idm_input.html', username=username, number=number)
+    return render_template('idm_input.html', username=username, number=number, password=password)
 
 @app.route('/idm_input', methods=['POST'])
 def idm_input():
@@ -26,18 +27,19 @@ def idm_input():
     flash('学生証をタッチしてください')
     idm_univ = get_IDm()
     # 前のフォームからユーザー名と番号を取得
-    return render_template('idm_input_bus.html', username=username,number=number,idm_univ=idm_univ)
+    return render_template('idm_input_bus.html', username=username, number=number,idm_univ=idm_univ)
 
 @app.route('/idm_input_bus', methods=['POST'])
 def idm_input_bus():
     # 前のフォームからユーザー名と番号を取得
     username = request.form.get('username')
     number = request.form.get('number')
+    password = request.form.get('password')
     idm_univ = request.form.get('idm_univ')
     flash('バスカードをタッチしてください')
     idm_bus = get_IDm()
     # 収集した情報をAPIに送信
-    requests.post(f"{API_URL}/users", json={'username': username, 'number': number, 'idm_univ': idm_univ, 'idm_bus': idm_bus})
+    requests.post(f"{API_URL}/users", json={'username': username, 'password' : password, 'number': number, 'idm_univ': idm_univ, 'idm_bus': idm_bus})
     # インデックスページにリダイレクト
     return redirect(url_for('index'))
 
