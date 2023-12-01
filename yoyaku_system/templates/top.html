@@ -56,12 +56,12 @@
 <body>
     <div class="container">
         <h1>Sojo Bus</h1>
-        <form>
-            <label for="username"">ユーザーID</label>
-            <input type="text" id="userid" name="userid" placeholder="ユーザーIDを入力してください">
+        <form method="post" >
+            <label for="username">ユーザーID</label>
+            <input type="text" id="username" name="username" placeholder="ユーザーIDを入力してください" required>
 
             <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" placeholder="パスワードを入力してください">
+            <input type="password" id="password" name="password" placeholder="パスワードを入力してください" required>
 
             <button type="submit">ログイン</button>
         </form>
