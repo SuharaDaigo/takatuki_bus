@@ -64,8 +64,7 @@ def check():
         return render_template('top.html')
 
 
-    #if(id=='k420762' and password =='Meteor1123'):
-    #    return render_template('top.html.html')
+
 
     '''
 @app.route('/top',methods=['GET','POST'])
