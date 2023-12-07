@@ -18,20 +18,23 @@
 
 .btn {
     display: inline-block;
-    width: 100%;
-    max-width: 350px; /* ボタン幅 */
+    width: 350px; /* ボタン幅 */
+    height: 60px;
     background-color: #D9D9D9;
     font-weight: bold; /* ボタンの太さ */
-    padding: 1em 2em;
     color: #000000;
     border-radius: 100vh;
     text-decoration: none;
     text-align: center;
+    font-size: 30px;
   }
 
 .btn:hover{
-    filter:brightness(1.05);
     cursor: pointer;
+}
+
+.btn:active{
+    background-color: #A1A1A1;
 }
 
 .footer{
