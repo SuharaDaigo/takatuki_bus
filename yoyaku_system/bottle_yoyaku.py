@@ -20,7 +20,7 @@ app = Bottle()
 def index():
     cursor.execute('SELECT seat_number FROM yoyaku_seki')
     yoyaku_seki = [row[0] for row in cursor.fetchall()]
-    return template('index_template', yoyaku_seki=yoyaku_seki)
+    return template('index', yoyaku_seki=yoyaku_seki)
 
 @app.route('/yoyaku', method='POST')
 def yoyaku():

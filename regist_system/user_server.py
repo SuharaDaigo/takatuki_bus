@@ -11,6 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     number = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String, nullable=False)
     idm_univ = db.Column(db.String(20), nullable=False)
     idm_bus = db.Column(db.String(20), nullable=False)
     def __repr__(self):
@@ -30,7 +31,7 @@ def limit_access():
 @app.route('/users', methods=['POST'])
 def add_user():
     data = request.get_json()
-    new_user = User(username=data['username'], number=data['number'],idm_univ=data['idm_univ'],idm_bus=data['idm_bus'])
+    new_user = User(username=data['username'],number=data['number'],password=data['password'],idm_univ=data['idm_univ'],idm_bus=data['idm_bus'])
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'User created successfully.'}), 201
@@ -47,7 +48,7 @@ def delete_user(id):
 @app.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
-    return jsonify([{'id': user.id, 'username': user.username, 'number': user.number, 'idm_univ': user.idm_univ, 'idm_bus': user.idm_bus} for user in users])
+    return jsonify([{'id': user.id, 'username': user.username, 'number': user.number, 'password':user.password, 'idm_univ': user.idm_univ, 'idm_bus': user.idm_bus} for user in users])
 
 if __name__ == '__main__':
     app.run(debug=True)
