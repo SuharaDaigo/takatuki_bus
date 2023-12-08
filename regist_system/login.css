@@ -16,7 +16,7 @@
     font-size: 60px;
 }
 
-.container{
+.content{
     display: flex;
     flex-direction: column;
     align-items: center;
