@@ -16,14 +16,14 @@ app.config['SECRET_KEY'] = os.urandom(24)
 def create_tables():
     db.create_all()
 
-class Users(UserMixin,db.Model):
+class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20),unique=True,nullable=False)
-    password = db.Column(db.String(100),nullable=False)
+    password = db.Column(nullable=False)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(int(user_id))
+    return User.query.get(int(user_id))
 
 @app.route('/',methods=['GET','POST'])
 def signin():
@@ -32,27 +32,27 @@ def signin():
         USER = request.form.get('username')
         PASSWORD = request.form.get('password')
 
-        user = Users(username=USER,password=PASSWORD)
+        user = User(username=USER,password=generate_password_hash(PASSWORD,method='pbkdf2:sha256'))
         db.session.add(user)
         db.session.commit()
-        return redirect('login')
+        return redirect(url_for('check'))
     
     else:
         return render_template('top.html')
 
-@app.route('/login',methods=['GET','POST'])
-def check():
-    if request.method == 'POST':
+@app.route('/check',methods=['GET','POST'])
+def login():
+    if request.method == '':
 
         USER = request.form.get('username')
         PASSWORD = request.form.get('password')
 
-        user = Users.query.filter_by(username=USER).first()
-        if Users.password==PASSWORD:
+        user = User.query.filter_by(username=USER).first()
+        if check_password_hash(user.password,PASSWORD):
             login_user(user)
-            return redirect('top')
+            return redirect(url_for('top'))
         else:
-            return redirect('login')
+            return redirect(url_for('check'))
     
     else:
         return render_template('top.html')
@@ -64,7 +64,7 @@ def check():
         return render_template('top.html')
 
 
-    #if(id=='k420762' and password =='Meteor1123'):
+    #if(id=='Yasufuu' and password ==''):
     #    return render_template('top.html.html')
 
     '''
