@@ -64,8 +64,7 @@ def login():
         return render_template('top.html')
 
 
-    #if(id=='Yasufuu' and password ==''):
-    #    return render_template('top.html.html')
+
 
     '''
 @app.route('/top',methods=['GET','POST'])
