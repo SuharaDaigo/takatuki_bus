@@ -28,6 +28,10 @@ def limit_access():
     if request.remote_addr not in allowed_ips:
         abort(403)
 
+@app.route('/login',methods=['POST'])
+def check_user():
+    data = request.get_json()        
+
 @app.route('/users', methods=['POST'])
 def add_user():
     data = request.get_json()
