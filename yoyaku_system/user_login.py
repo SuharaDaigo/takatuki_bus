@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 API_URL = "http://127.0.0.1:5000"  # Web API の URL
 
 
-@app.route('/',methods=['POST','GET'])
+@app.route('/')
 def top():
         return render_template('top.html')
 
@@ -20,25 +20,21 @@ def login_check():
             password = request.form.get('password')
 
             requests.post(f"{API_URL}/check", json={'username': username,'password':password})
-            return redirect(url_for(f'login_result'))
-        '''if(true_password==password):
-            return render_template('personal.html',username=username)
-        else:
-              return redirect('/')'''
+            return redirect(f'login_result/{username}')
 
 
-@app.route('/login_result',methods = ['GET'])
-def login_result():
+@app.route('/login_result/<string:username>',methods = ['GET'])
+def login_result(username):
     response = requests.get(f"{API_URL}/check_return")
     user = response.json()
-    hash_password = generate_password_hash(user[1],method='pbkdf2:sha256')
+    hash_password = generate_password_hash(user[0],method='pbkdf2:sha256')
     print(hash_password)
-    username = user[0]
-    password = user[1]
-    true_password = user[2]
+    password = user[0]
+    true_password = user[1]
     if check_password_hash(true_password,password):
-          return render_template('personal.html',username=username)
-
+        return render_template('personal.html',username=username)
+    else:
+        return redirect(url_for('top'))
 
 '''@app.route('/login_success',methods=['POST','GET']
 login_success(username):

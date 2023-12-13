@@ -40,7 +40,7 @@ def check_login():
 @app.route('/check_return',methods=['GET'])
 def check_return():
     print(username,password,true_password)
-    data = [username,password,true_password]
+    data = [password,true_password]
     return jsonify(data)
 
 
