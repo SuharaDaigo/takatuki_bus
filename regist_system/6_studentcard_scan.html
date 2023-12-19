@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生証スキャン</title>
+
+    <style>
+        .header{
+            position: sticky;
+            top: 0px;
+            z-index: 10;
+            height: 90px;
+            background-color: #212166;
+        }
+
+        .header-container{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height:100%;
+            padding-left: 30px;
+            color: #ffffff;
+            font-size: 60px;
+        }
+
+        h1{
+            font-size: 60px;
+            text-align: center;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 350px; /* ボタン幅 */
+            height: 60px;
+            background-color: #D9D9D9;
+            color: #000000;
+            border-radius: 100vh;
+            text-decoration: none;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold; /* ボタンの太さ */
+
+            margin:40px;
+        }
+
+        .btn:hover{
+            cursor: pointer;
+        }
+
+        .btn:active{
+            background-color: #A1A1A1;
+        }
+
+        .footer{
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 90px;
+            background-color: #212166;
+        }
+
+        #line{
+            margin-top: 70px;
+            width: 100%;
+            height: 5px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a>Sojo Bus</a>
+        </div>
+    </header>
+
+    <h1>登録者の学生証を<br>スキャンしてください</h1>
+
+    <div class="container">
+        <a href="7_complete.html"><button type="submit" class="btn">スキャン</button></a>
+        <a href="5_release.html"><button type="submit" class="btn">戻る</button></a>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div id="line"></div>
+        </div>
+    </footer>
+</body>
+
+</html>
