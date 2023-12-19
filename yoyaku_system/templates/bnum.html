@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* グリッドのスタイル */
+    .grid-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .grid-item {
+      box-sizing: border-box;
+      width: calc(100% / 12); /* 12列のグリッドに均等に分割 */
+      border: 1px solid #ddd; /* ボーダー追加（任意） */
+      padding: 10px; /* 内側の余白（任意） */
+      text-align: center; /* 中央揃え（任意） */
+      cursor: pointer; /* カーソルをポインターに変更 */
+    }
+
+    .reserved {
+      background-color: gray;
+      color: white;
+      box-sizing: border-box;
+      width: calc(100% / 12); /* 12列のグリッドに均等に分割 */
+      border: 1px solid #ddd; /* ボーダー追加（任意） */
+      padding: 10px; /* 内側の余白（任意） */
+      text-align: center; /* 中央揃え（任意） */
+      cursor: pointer; /* カーソルをポインターに変更 */
+    }
+
+    .clicked {
+      background-color: lightblue; /* クリックしたときの背景色 */
+    }
+
+    /* 画面が狭い場合に列を1つにするための調整 */
+    @media (max-width: 600px) {
+      .grid-item {
+        width: 100%; /* 画面が狭い場合、列を1つにする */
+      }
+    }
+  </style>
+  <script>
+    history.pushState('/choice');
+  </script>
+</head>
+<body>
+  <!-- グリッドの親要素 -->
+  <div class="grid-container">
+    {% for seat in seat_date %}
+      {% if reservedtf[seat.number - 1] == '1' %}
+        <div class="reserved" onclick="changeColor(this); updateForm('{{seat.number}}')">{{seat.number}}</div>
+      {% elif reservedtf[seat.number - 1] == '0' %}
+        <div class="grid-item" onclick="changeColor(this); updateForm('{{seat.number}}')">{{seat.number}}</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <script>
+    // 色を変更する関数
+    function changeColor(element) {
+      // クリックされた要素にclickedクラスを追加
+      element.classList.toggle('clicked');
+    }
+
+    function updateForm(seatnumber) {
+      document.querySelector('input[name = "seat_number"]').value = seatnumber;
+    }
+  </Script>
+
+  <form action = "/choice/{{bnum}}/reserve" method="post">
+    <input type="hidden" name="seat_number">
+    <br>
+    <input type="submit" value="Reserve">
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ボタンのクリックでページ遷移</title>
+    <style>
+        /* スタイルを追加する場合はここに追加 */
+        .bus-button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        
+    </script>
+</head>
+<body>
+
+<div>
+    {% for bus in bus_date %}
+    <button class="bus-button" onclick="redirectToNextPage('{{url_for('seat', bnum = bus.id)}}')">
+        {{ bus.departure_time.strftime('%H:%M')}}発/{{bus.busid}}便<br>
+        総情行きバス 空席{{busseat[bus]}}
+    </button>
+    {% endfor %}
+</div>
+
+<script>
+    // JavaScriptでページ遷移を行う関数
+    function redirectToNextPage(nextPageURL) {
+        // ここに遷移先のURLを設定
+        window.location.href = nextPageURL;
+    }
+</script>
+
+</body>
+</html>
