@@ -97,7 +97,7 @@
     </style>
     <script>
         function showAlert() {
-            alert("登録が完了しました。");
+            alert("削除が完了しました。");
         }
     </script>
 </head>
@@ -105,51 +105,42 @@
     <div class="header">
         <div class="header-container">Sojo Bus</div>
     </div>
-    <form onsubmit="showAletrt" method="post" action="{{url_for('register')}}">
-        <h1>バス（時刻・席数）登録</h1>
-        <h2>登録するバスの<strong>日時・定員・使用不可席</strong>を入力してください</h2>
+    <form onsubmit="showAletrt" method="post" action="{{url_for('kanrideleteregister')}}">
+        <h1>バス便削除</h1>
+        <h2>登録するバスの<strong>日時・便名</strong>を入力してください</h2>
         <table border="1">
             <tr>
                 <th>入力形式</th>
                 <th>日時</th>
-                <th>定員</th>
-                <th>使用不可席</th>
+                <th>バスの便名</th>
             </tr>
             <tr>
                 <th>例</th>
                 <th>12/6 14:24</th>
-                <th>28 OR 24</th>
-                <th>12,20</th>
+                <th>01</th>
             </tr>
             <tr>
                 <th>入力</th>
                 <td><input type="text" id="datetime" placeholder="〇/〇 00:00" name="datetime" pattern="([1-9]|0[1-9]|1[0-2])/([1-9]|0[1-9]|[12][0-9]|3[01]) (0\d|1\d|2[0-3]):[0-5]\d" required></td>
-                <td><input type="text" id="seat_number" placeholder="00" name="seat_number" pattern="(28|24)" required></td>
-                <td><input type="text" id="name_booked" placeholder="00" name="name_booked" pattern="^(\d+,){0,28}\d*$"></td>
+                <td><input type="text" id="busid" placeholder="00" name="busid" pattern="([0-9][1-9])" required></td>
             </tr>
         </table>
         <div class="caution">
             <p>※注意</p>
             <ul>
                 <li>日時は「<b class="redline">月/日 時:分</b>」でのみしか受け付けません。</li>
-                <li>バスタイプの定員はバス正座数ではなくスペック上の定員を入力して下さい</li>
-                <li>使用不可座席を「<b class="redline">数字,数字</b>」の形で入力してください。それ以外受け付けません。</li>
-                <li>使用不可席に28席定員の場合は22,24席定員の場合は19以上を入れるとエラーが出ます</li>
+                <li>バスの便名は同時刻発の便名です。通し番号ではありません。また、01～99までしか受け付けません。</li>
             </ul>
         </div>
         
         <div class="regist">
-            <input type="submit" value="登録">
+            <input type="submit" value="削除">
         </div>
     </form>
     <div class="footer">
         <div class="footer-container">
             <div class="line"></div>
         </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="{{ url_for('kanricancel') }}"><button>管理キャンセルへ</button></a>
     </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
-from sqlalchemy import cast, text
+from flask import render_template, redirect, url_for
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yoyaku_seki.db'
@@ -80,17 +80,25 @@ def add_bus_and_seats(seattype, bus_time_object):
             db.session.add(new_seat)
             db.session.commit()
         return nwbid.id
+    
+@app.before_request
+def create_tables():
+    db.create_all()
 
-@app.route('/kanri')
-def kanri():
-    return render_template('kanri.html')
-
+#許可するIPアドレスを指定
+@app.before_request
+def limit_access():
+    allowed_ips = ['127.0.0.1']
+    if request.remote_addr not in allowed_ips:
+        abort(403)
+    
 @app.route('/kanri/register', methods=['POST'])
 def register():
     try:
-        bus_time_str = request.form['datetime']
-        seattype = int(request.form['seat_number'])
-        name_booked = request.form['name_booked']
+        date = request.get_json()
+        bus_time_str = date['datetime']
+        seattype = date['seat_number']
+        name_booked = date['name_booked']
 
         bus_time_object = process_datetime_input(bus_time_str)
         bus_id = add_bus_and_seats(seattype, bus_time_object)
@@ -105,49 +113,15 @@ def register():
                     db.session.add(reservation)
                     db.session.commit()
                 else:
-                    return f'エラー：指定された座席がありません'
-        return redirect(url_for('kanri'))
+                    return jsonify({'message' : 'Can not find seat to reserved'})
+        return jsonify({'message': 'Bus Table all created successfully.'})
     except ValueError as e:
-        return f'エラー: {str(e)}'
+        return jsonify({'message' : 'エラー{str(e)}' })
 
-    return redirect(url_for('choice'))
-
-@app.route('/kanri/cancel')
+@app.route('/')
 def kanricancel():
-    return render_template('kanricancel.html')
-
-@app.route('/kanri/cancel/register', methods=['POST'])
-def kanricancelregister():
-    bus_time_str = request.form['datetime']
-    busid_str = request.form['busid']
-
-    bus_time_object = datetime.strptime(bus_time_str, '%Y-%m-%dT%H:%M')
-
-    # busid_strが文字列として与えられた場合も整数に変換1    
-    try:
-        busid = int(busid_str)
-    except ValueError:
-        busid = None  # エラーが発生した場合はNoneとして扱うか、適切なデフォルト値を設定
-
-    # 削除対象のバスを取得
-    deletebus = db.session.query(Bus).filter(
-        db.func.strftime('%Y-%m-%d %H:%M:%S', Bus.departure_time) == bus_time_object.strftime('%Y-%m-%d %H:%M:%S'),
-        db.func.substr('000' + cast(Bus.busid, text), -2) == f'{busid:02d}' if busid is not None else None
-    ).first()
-
-    # バスに関連するデータを削除
-    if deletebus:
-        db.session.query(Reservation).filter_by(bus_id=deletebus.id).delete()
-        db.session.query(Seat).filter_by(bus_id=deletebus.id).delete()
-
-        # バス自体を削除
-        db.session.delete(deletebus)
-
-        # 変更を保存
-        db.session.commit()
-
-    return redirect(url_for('kanricancel'))
-
+    return render_template(url_for('personal'))
+    
 
 #ここから個人ページの処理
 
@@ -219,3 +193,6 @@ def cancel():
 @app.route('/cancel/register')
 def cancelregister():
     return redirect(url_for('personal'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
