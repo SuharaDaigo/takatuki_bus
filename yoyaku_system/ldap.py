@@ -1,7 +1,10 @@
 from flask import Flask , render_template , request 
 from ldap3 import Server, Connection, ALL
+from flask_login import LoginManager, loginrequired , login_user
 
 app = Flask(__name__)
+login_manager = LoginManager()
+
 
 def user_password_exist(username, password):
 
@@ -35,7 +38,7 @@ def user_password_exist(username, password):
     return exist, user_full_name
 
 
-@app.route('/',methods = ['POST','GET'])
+@app.route('/')
 def top():
     return render_template('top.html')
 
