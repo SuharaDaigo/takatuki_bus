@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>定期券スキャン</title>
+    <title>定期券を離してください</title>
 
     <style>
         .header{
@@ -27,6 +27,12 @@
 
         h1{
             font-size: 60px;
+            text-align: center;
+        }
+
+        h2{
+            color: #ff0000;
+            font-size: 50px;
             text-align: center;
         }
 
@@ -84,13 +90,19 @@
         </div>
     </header>
 
-    <h1>定期券を<br>スキャンしてください</h1>
+    <h1>定期券の読み取りが完了しました</h1>
+    <h2>※定期券を離してください</h1>
 
     <div class="container">
-        <a href="5_release.html"><button type="submit" class="btn">スキャン</button></a>
-        <a href="3_scan.html"><button type="submit" class="btn">戻る</button></a>
+      <form action="/input_idm_student" method="post">
+        <input type="hidden" name="idm_bus" value="{{ idm_bus }}">
+        <button type="submit" class="btn">学生証のスキャンへ</button>
+      </form>
+      <form action="/scan" method="post">
+        <button type="submit" class="btn">戻る</button>
+      </form>
     </div>
-    
+
 
     <footer class="footer">
         <div class="footer-container">

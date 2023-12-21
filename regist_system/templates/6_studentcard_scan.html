@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スキャンに進む</title>
+    <title>学生証スキャン</title>
 
     <style>
         .header{
@@ -27,12 +27,6 @@
 
         h1{
             font-size: 60px;
-            text-align: center;
-        }
-
-        h2{
-            color: red;
-            font-size: 40px;
             text-align: center;
         }
 
@@ -90,14 +84,18 @@
         </div>
     </header>
 
-    <h1>定期券と学生証を準備してください</h1>
-    <h2>※定期券の有効期限を確認</h2>
+    <h1>登録者の学生証を<br>スキャンしてください</h1>
 
     <div class="container">
-        <a href="4_teiki_scan.html"><button type="submit" class="btn">登録に進む</button></a>
-        <a href="2_menu.html"><button type="submit" class="btn">戻る</button></a>
+      <form action="/idm_input_student" method="post">
+        <input type="hidden" name="idm_bus" value="{{ idm_bus }}">
+        <button type="submit" class="btn">スキャン</button>
+      </form>
+      <form action="/scan" method="post">
+        <button type="submit" class="btn">戻る</button>
+      </form>
     </div>
-    
+
 
     <footer class="footer">
         <div class="footer-container">

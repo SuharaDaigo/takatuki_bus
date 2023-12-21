@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import requests, nfc, binascii
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -11,39 +10,53 @@ API_URL = "http://127.0.0.1:5000"  # Web API の URL
 def index():
     response = requests.get(f"{API_URL}/users")
     users = response.json()
-    return render_template('2_menu.html', users=users)
+    return render_template('2_menu.html')
 
-@app.route('/add', methods=['POST'])
-def add_user():
-    # /idm_inputにリダイレクト
+
+@app.route('/scan')
+def scan():
     return render_template('3_scan.html')
 
-@app.route('/idm_input', methods=['POST'])
-def idm_input():
-    student_id,idm_univ = get_univ()
-    return render_template('4_teiki_scan.html', student_id = student_id, idm_univ = idm_univ)
+
+@app.route('/teiki_scan', methods=['POST'])
+def add_user():
+    return render_template('4_teiki_scan.html')
+
 
 @app.route('/idm_input_bus', methods=['POST'])
 def idm_input_bus():
-    # 前のフォームからユーザー名と番号を取得
-    student_id = request.form.get('student_id')
-    idm_univ = request.form.get('idm_univ')
-    idm_bus = get_IDm()
+    idm_bus = get_bus()
+    return render_template('5_release.html', idm_bus = idm_bus)
 
+
+@app.route('/release', methods=['POST'])
+def release():
+    idm_bus = request.form.get('idm_bus')
+    return render_template('6_studentcard_scan.html', idm_bus = idm_bus)
+
+
+@app.route('/idm_input_student', methods=['POST'])
+def idm_input():
+    # 前のフォームからユーザー名と番号を取得
+    idm_bus = request.form.get('idm_bus')
+    student_id,idm_univ = get_univ()
+    # busとunivのidmが一致してたら初めからやり直し
     if idm_univ == idm_bus :
         return redirect(url_for('index'))
     else :
         # 収集した情報をAPIに送信
         requests.post(f"{API_URL}/users", json={'student_id': student_id,'idm_univ': idm_univ, 'idm_bus': idm_bus})
-        # インデックスページにリダイレクト
-        return redirect(url_for('index'))
+        # 登録完了ページにリダイレクト
+        return render_template('7_complete.html', student_id)
+
 
 @app.route('/delete', methods=['POST'])
 def delete_user():
     user_id = request.form.get('user_id')
     requests.delete(f"{API_URL}/users/{user_id}")
-    return redirect(url_for('index'))
 
+
+# 学生証スキャン用関数
 def get_univ():
     clf = nfc.ContactlessFrontend('usb')
     tag = clf.connect(rdwr={'on-connect': lambda tag: False})
@@ -52,7 +65,6 @@ def get_univ():
     tag.idm, tag.pmm, tag.sys = idm, pmm, 0xfe00
 
     service_code = [nfc.tag.tt3.ServiceCode(106, 0x0b)]
-    #bc_id = [nfc.tag.tt3.BlockCode(i) for i in range(4)]
     bc_id   = [nfc.tag.tt3.BlockCode(0)]
     bc_name = [nfc.tag.tt3.BlockCode(1)]
 
@@ -69,7 +81,8 @@ def get_univ():
     return student_id,idm
 
 
-def get_IDm():
+# バス定期スキャン用関数
+def get_bus():
     global idm
     try:
         # USB接続

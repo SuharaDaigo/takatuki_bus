@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>定期券を離してください</title>
+    <title>定期券スキャン</title>
 
     <style>
         .header{
@@ -27,12 +27,6 @@
 
         h1{
             font-size: 60px;
-            text-align: center;
-        }
-
-        h2{
-            color: #ff0000;
-            font-size: 50px;
             text-align: center;
         }
 
@@ -90,14 +84,17 @@
         </div>
     </header>
 
-    <h1>定期券の読み取りが完了しました</h1>
-    <h2>※定期券を離してください</h1>
+    <h1>定期券を<br>スキャンしてください</h1>
 
     <div class="container">
-        <a href="6_studentcard_scan.html"><button type="submit" class="btn">学生証のスキャンへ</button></a>
-        <a href="4_teiki_scan.html"><button type="submit" class="btn">戻る</button></a>
+      <form action="/idm_input_bus" method="post">
+        <button type="submit" class="btn">スキャン</button>
+      </form>
+      <form action="/add" method="post">
+        <button type="submit" class="btn">戻る</button>
+      </form>
     </div>
-    
+
 
     <footer class="footer">
         <div class="footer-container">
