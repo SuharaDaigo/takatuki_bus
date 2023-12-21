@@ -13,7 +13,7 @@ def index():
     return render_template('2_menu.html')
 
 
-@app.route('/scan')
+@app.route('/scan', methods=['GET'])
 def scan():
     return render_template('3_scan.html')
 
