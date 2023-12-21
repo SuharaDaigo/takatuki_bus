@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import requests, nfc, binascii
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.config['SECRET_KEY'] = '0000'
 API_URL = "http://127.0.0.1:5000"  # Web API の URL
 
 
@@ -23,7 +23,7 @@ def add_user():
     return render_template('4_teiki_scan.html')
 
 
-@app.route('/idm_input_bus', methods=['POST'])
+@app.route('/input_idm_bus', methods=['POST'])
 def idm_input_bus():
     idm_bus = get_bus()
     return render_template('5_release.html', idm_bus = idm_bus)
@@ -35,7 +35,7 @@ def release():
     return render_template('6_studentcard_scan.html', idm_bus = idm_bus)
 
 
-@app.route('/idm_input_student', methods=['POST'])
+@app.route('/input_idm_univ', methods=['POST'])
 def idm_input():
     # 前のフォームからユーザー名と番号を取得
     idm_bus = request.form.get('idm_bus')
@@ -45,11 +45,19 @@ def idm_input():
         return redirect(url_for('index'))
     else :
         # 収集した情報をAPIに送信
-        requests.post(f"{API_URL}/users", json={'student_id': student_id,'idm_univ': idm_univ, 'idm_bus': idm_bus})
+        response = requests.post(f"{API_URL}/users", json={'student_id': student_id,'idm_univ': idm_univ, 'idm_bus': idm_bus})
+        # データに重複があった場合はエラーページにリダイレクト
+        status_code = response.status_code
+        if status_code == 401:
+            message = "この学生証はすでに登録されています"
+            return render_template('8_error.html', message = message)
+        elif status_code == 402:
+            message = "このバス定期券はすでに登録されています"
+            return render_template('8_error.html', message = message)
         # 登録完了ページにリダイレクト
-        return render_template('7_complete.html', student_id)
+        return render_template('7_complete.html', student_id = student_id)
 
-
+# ユーザー削除用関数(使わないかも)
 @app.route('/delete', methods=['POST'])
 def delete_user():
     user_id = request.form.get('user_id')

@@ -87,11 +87,11 @@
     <h1>登録者の学生証を<br>スキャンしてください</h1>
 
     <div class="container">
-      <form action="/idm_input_student" method="post">
+      <form action="/input_idm_univ" method="post">
         <input type="hidden" name="idm_bus" value="{{ idm_bus }}">
         <button type="submit" class="btn">スキャン</button>
       </form>
-      <form action="/scan" method="post">
+      <form action="/scan" method="get">
         <button type="submit" class="btn">戻る</button>
       </form>
     </div>
