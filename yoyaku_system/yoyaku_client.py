@@ -22,7 +22,5 @@ def personal():
     name = "test"
     return render_template('personal.html', name=name)
 
-@app.route('')
-
 if __name__ == '__main__':
     app.run(port=8000)
