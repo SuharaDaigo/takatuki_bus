@@ -34,6 +34,7 @@
       .btn {
         display: block;
         margin: auto;
+        margin-top: 30px;
         width: 350px; /* ボタン幅 */
         height: 60px;
         margin: 10px;
@@ -44,7 +45,22 @@
         text-align: center;
         font-size: 30px;
         font-weight: bold; /* ボタンの太さ */
-        top: 60%;
+      }
+      .btn2 {
+        display: block;
+        margin: auto;
+        width: 300px; /* ボタン幅 */
+        height: 50px;
+        margin: 10px;
+        background-color: white;
+        color: #4d4c4c;
+        border-color: #cbc9c9;
+        border-radius: 0;
+        text-decoration: none;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold; /* ボタンの太さ */
+        top: 80%;
       }
 
       .btn:hover {
@@ -53,6 +69,13 @@
 
       .btn:active {
         background-color: #a1a1a1;
+      }
+      .btn2:hover {
+        cursor: pointer;
+      }
+
+      .btn2:active {
+        background-color: #edebeb;
       }
 
       .footer {
@@ -74,15 +97,15 @@
         display: inline-block;
         position: absolute;
         margin: auto;
-        top: 50%;
+        top: 18%;
+        margin-bottom: 30px;
       }
-      .come {
-        display: inline-block;
-        position: absolute;
+      .waku {
+        display: block;
         margin: auto;
-        top: -70%;
-        left: 25px;
-        font-size: 25px;
+        border: solid #000000;
+        height: 280px;
+        width: 320px;
       }
     </style>
   </head>
@@ -96,8 +119,12 @@
 
     <div class="container">
       <div class="box">
-        <div class="come">本当にキャンセルしますか？</div>
-        <button type="submit" class="btn">予約取消の確定</button>
+        <div class="waku">
+          <button class="btn2">08:17 1号車 ></button>
+          <button class="btn2">08:24 2号車 ></button>
+          <button class="btn2">09:57 3号車 ></button>
+          <button class="btn2">10:02 4号車 ></button>
+        </div>
         <a href="yoyaku_kozin.html"><button type="submit" class="btn">戻る</button>
       </div>
     </div>

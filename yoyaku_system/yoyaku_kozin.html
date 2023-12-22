@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yayaku_system_defalt</title>
+    <style>
+      .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        height: 80px;
+        width: 100%;
+        background-color: #212166;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding-left: 30px;
+        color: #ffffff;
+        font-size: 40px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        display: block;
+        margin: auto;
+        width: 350px; /* ボタン幅 */
+        height: 60px;
+        margin: 10px;
+        background-color: #d9d9d9;
+        color: #000000;
+        border-radius: 100vh;
+        text-decoration: none;
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold; /* ボタンの太さ */
+        top: 60%;
+      }
+
+      .btn:hover {
+        cursor: pointer;
+      }
+
+      .btn:active {
+        background-color: #a1a1a1;
+      }
+
+      .footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 80px;
+        width: 100%;
+        background-color: #212166;
+      }
+
+      #line {
+        margin-top: 70px;
+        width: 100%;
+        height: 5px;
+        background-color: #ffffff;
+      }
+      .box {
+        display: inline-block;
+        position: absolute;
+        margin: auto;
+        top: 50%;
+      }
+      .atagu1 {
+        display: inline;
+        position: absolute;
+        top: -80%;
+        left: 20%;
+        color: blue;
+        font-size: 30px;
+      }
+      .atagu2 {
+        display: inline;
+        position: absolute;
+        top: -40%;
+        left: 18%;
+        color: blue;
+        font-size: 30px;
+      }
+      .namae {
+        display: inline;
+        position: absolute;
+        top: -120%;
+        left: 18%;
+        color: #000000;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header-container">
+        <a>Sojo Bus</a>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="box">
+        <div class="namae">ようこそ○○さん</div>
+        <p></p>
+        <a class="atagu1" href="yoyaku_genzai.html">現在の予約状況</a>
+        <p></p>
+        <a class="atagu2">あなたの予約状況</a>
+        <a href="yoyaku_syaryousentaku.html"
+          ><button type="submit" class="btn">新規予約</button></a
+        >
+        <a href="yoyaku_kakunin.html"
+          ><button type="submit" class="btn">予約取消</button></a
+        >
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div id="line"></div>
+      </div>
+    </footer>
+  </body>
+</html>
