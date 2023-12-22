@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import requests, nfc, binascii
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '0000'
+app.secret_key = 'your_secret_key'
 API_URL = "http://127.0.0.1:5000"  # Web API の URL
 
 

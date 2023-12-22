@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バス登録ページ</title>
+    <style>
+        .header{
+            width: 100%;
+            height: 90px;
+            background-color: #212166;
+        }
+        .header-container{
+            padding-left: 30px;
+            color: #ffffff;
+            font-size: 60px;
+        }
+        h1{
+            text-align: center;
+            font-size: 40px;
+        }
+        h2{
+            text-align: center;
+            font-weight: normal;
+        }
+        table{
+            margin: auto;
+            border-collapse: collapse;
+        }
+        tr, th{
+            width: 100px;
+            height: 30px;
+        }
+        input[type="text"]{
+            margin: 5px;
+            text-align: center;
+        }
+        input[type="text"]:focus{
+            background-color: lightblue;
+        }
+        .caution{
+            margin: auto;
+            margin-top: 20px;
+            padding: 10px;
+            width: 670px;
+            height: 125px;
+            border: 1px solid;
+            text-align: left;
+        }
+        p{
+            margin: 0px;
+            font-size: 20px;
+        }
+        ul{
+            margin: 0px;
+        }
+        
+        li{
+            font-size: 15px;
+        }
+        .redline{
+            text-decoration: underline red;
+        }
+        .regist{
+            margin: auto;
+            margin-top: 20px;
+            width: 200px;
+        }
+        input[type="submit"]{
+            margin: auto;
+            width: 200px;
+            border-radius: 100vh;
+            background-color: #D9D9D9;
+            color: #000000;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold; /* ボタンの太さ */
+        }
+        input[type="submit"]:hover{
+            cursor: pointer;
+        }
+        input[type="submit"].active{
+            background-color: #A1A1A1;
+        }
+        .footer{
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 90px;
+            background-color: #212166;
+        }
+        .line{
+            margin-top: 70px;
+            height: 5px;
+            background-color: #ffffff;
+        }
+    </style>
+    <script>
+        function showAlert() {
+            alert("登録が完了しました。");
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-container">Sojo Bus</div>
+    </div>
+    <form onsubmit="showAletrt" method="post" action="{{url_for('register')}}">
+        <h1>バス（時刻・席数）登録</h1>
+        <h2>登録するバスの<strong>日時・定員・使用不可席</strong>を入力してください</h2>
+        <table border="1">
+            <tr>
+                <th>入力形式</th>
+                <th>日時</th>
+                <th>定員</th>
+                <th>使用不可席</th>
+            </tr>
+            <tr>
+                <th>例</th>
+                <th>12/6 14:24</th>
+                <th>28 OR 24</th>
+                <th>12,20</th>
+            </tr>
+            <tr>
+                <th>入力</th>
+                <td><input type="text" id="datetime" placeholder="〇/〇 00:00" name="datetime" pattern="([1-9]|0[1-9]|1[0-2])/([1-9]|0[1-9]|[12][0-9]|3[01]) (0\d|1\d|2[0-3]):[0-5]\d" required></td>
+                <td><input type="text" id="seat_number" placeholder="00" name="seat_number" pattern="(28|24)" required></td>
+                <td><input type="text" id="name_booked" placeholder="00" name="name_booked" pattern="^(\d+,){0,28}\d*$"></td>
+            </tr>
+        </table>
+        <div class="caution">
+            <p>※注意</p>
+            <ul>
+                <li>日時は「<b class="redline">月/日 時:分</b>」でのみしか受け付けません。</li>
+                <li>バスタイプの定員はバス正座数ではなくスペック上の定員を入力して下さい</li>
+                <li>使用不可座席を「<b class="redline">数字,数字</b>」の形で入力してください。それ以外受け付けません。</li>
+                <li>使用不可席に28席定員の場合は22,24席定員の場合は19以上を入れるとエラーが出ます</li>
+            </ul>
+        </div>
+        
+        <div class="regist">
+            <input type="submit" value="登録">
+        </div>
+    </form>
+    <div class="footer">
+        <div class="footer-container">
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('kanricancel') }}"><button>管理キャンセルへ</button></a>
+    </div>
+</body>
+</html>

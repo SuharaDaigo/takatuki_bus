@@ -68,11 +68,18 @@
         </section>
         <section>
             <form>
-                <button type="submit">新規予約</button>
-                <button type="submit">予約解消</button>
+                <button type="button" onclick="redirectToNextPage('{{url_for('choice')}}')">新規予約</button>
+                <button type="button" onclick="redirectToNextPage('{{url_for('cancel')}}')">予約解消</button>
             </form>
         </section>
     </div>
 
 </body>
+<script>
+    // JavaScriptでページ遷移を行う関数
+    function redirectToNextPage(nextPageURL) {
+        // ここに遷移先のURLを設定
+        window.location.href = nextPageURL;
+    }
+</script>
 </html>

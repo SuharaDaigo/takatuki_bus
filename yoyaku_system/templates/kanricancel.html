@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理キャンセル</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        header {
+            background-color: #212166;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+        form {
+            margin: auto;
+            margin-top: 20px;
+            width: 400px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            background-color: #D9D9D9;
+            color: #000000;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #A1A1A1;
+        }
+        footer {
+            background-color: #212166;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>管理キャンセル</h1>
+    </header>
+
+    <form action="{{ url_for('kanricancelregister') }}" method="post">
+        <label for="datetime">出発時刻:</label>
+        <input type="datetime-local" id="datetime" name="datetime" required>
+
+        <label for="busid">バスID:</label>
+        <input type="number" id="busid" name="busid" required>
+
+        <button type="submit">バスキャンセル</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('kanri') }}"><button>管理へ</button></a>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Your Company Name</p>
+    </footer>
+</body>
+</html>
