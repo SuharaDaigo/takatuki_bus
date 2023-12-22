@@ -58,6 +58,11 @@
     </div>
 </body>
 <script>
+    <!-- 戻るボタンが押された時個人ページに -->
+      window.addEventListener('popstate', function(e) {
+        location.href = '/';
+      }, false);
+
     function redirectToNextPage(nextPageURL) {
         // ここに遷移先のURLを設定
         window.location.href = nextPageURL;
