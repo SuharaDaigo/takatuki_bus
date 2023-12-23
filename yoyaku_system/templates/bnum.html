@@ -68,10 +68,6 @@
       document.querySelector('input[name = "seat_number"]').value = seatnumber;
     }
   </Script>
-    <!-- 戻るボタンが押された時個人ページに -->
-      window.addEventListener('popstate', function(e) {
-        location.href = '/';
-      }, false);
 
   <form action = "/choice/{{bnum}}/reserve" method="post">
     <input type="hidden" name="seat_number">
