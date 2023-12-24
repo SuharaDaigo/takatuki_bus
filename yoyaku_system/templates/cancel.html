@@ -57,11 +57,17 @@
         </form>
     </div>
 </body>
-<script>
-    function redirectToNextPage(nextPageURL) {
-        // ここに遷移先のURLを設定
-        window.location.href = nextPageURL;
+  <script>
+  function redirectToNextPage(nextPageURL) {
+    // ここに遷移先のURLを設定
+    window.location.href = nextPageURL;
+  }
+    <!-- ブラウザバックされたら/ルートに飛ばす -->
+  window.onpageshow = function(event) {
+    if (event.persisted) {
+      window.location.href = "/";
     }
-</script>
+  };
+  </script>
 </html>
 

@@ -96,6 +96,14 @@
       <div id="line"></div>
     </div>
   </footer>
+<!-- ブラウザバックされたら/ルートに飛ばす -->
+<script>
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.href = "/";
+      }
+    };
+</script>
 
 </html>
 

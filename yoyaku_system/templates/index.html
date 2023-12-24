@@ -134,6 +134,12 @@
             alert("席を選択してください。");
         }
     }
+      <!-- ブラウザバックされたら/ルートに飛ばす -->
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.href = "/";
+      }
+    };
 </script>
 
 </body>
